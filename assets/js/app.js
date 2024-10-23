@@ -17,9 +17,31 @@ taskForm.addEventListener('submit', event => {
     };
 
     taskList.push(task)
-    console.log(taskList);
+    const taskList_string = JSON.stringify(taskList);
+    localStorage.setItem('taskList', taskList_string);
     taskForm.reset();
+    
+    
+    const taskList_temp = JSON.parse(localStorage.getItem('taskList'));
+    console.log("tarea recuperada: ", taskList_temp);
 
+    const taskContainer = document.querySelector('#taskContainer');
+
+    if(taskList_temp){
+      taskList_temp.forEach((task, index) => {
+        console.log(index, task)
+        taskContainer.innerHTML += `
+        <article>
+          <span>${ index }</span>
+          <h3>${ task.title }</h3>
+          <p>${ task.description }</p>
+          <span>${ task.status }</span>
+          <span>${ task.category_description }</span>
+          <span>${ task.category }</span>
+        </article>
+        `
+      })
+    }
   }
 })
 
